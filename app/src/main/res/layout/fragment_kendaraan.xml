@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="28dp"
+    tools:context=".Kendaraan.KendaraanFragment">
+
+   <LinearLayout
+       android:weightSum="5"
+       android:orientation="vertical"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+       <TextView
+           android:layout_weight="4.4"
+           android:text="Daftar Kendaraan Kami"
+           android:fontFamily="@font/dmsans_bold"
+           android:textColor="@color/black"
+           android:textSize="24sp"
+           android:gravity="center_vertical"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"/>
+
+       <androidx.recyclerview.widget.RecyclerView
+           android:id="@+id/recyclerKendaraan"
+           android:layout_weight="0.6"
+           tools:listitem="@layout/row_kendaraan"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"/>
+
+   </LinearLayout>
+
+</FrameLayout>

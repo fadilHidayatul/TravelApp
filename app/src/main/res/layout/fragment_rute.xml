@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f0f0f0"
+    tools:context=".Home.RuteFragment">
+
+    <LinearLayout
+        android:id="@+id/tesLinear"
+        android:paddingHorizontal="18dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pilih Rute Keberangkatan"
+            android:textSize="20sp"
+            android:paddingVertical="12dp"
+            android:fontFamily="@font/dmsans_bold"
+            android:textColor="@color/black"
+            />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerRute"
+            android:scrollbars="none"
+            tools:listitem="@layout/row_rute"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+
+</FrameLayout>

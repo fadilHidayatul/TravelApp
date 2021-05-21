@@ -1,0 +1,64 @@
+package com.mediatama.travelorder.Home.Adapter
+
+import android.content.Context
+import android.content.Intent
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
+import androidx.recyclerview.widget.RecyclerView
+import com.mediatama.travelorder.MainActivity
+import com.mediatama.travelorder.SharedPreferences.PrefManager
+import com.mediatama.travelorder.databinding.RowRuteBinding
+
+
+class RuteAdapter(context: Context?) : RecyclerView.Adapter<RuteAdapter.viewHolder>() {
+    private lateinit var mContext: Context
+    private lateinit var manager : PrefManager
+
+
+    init {
+        mContext = context!!
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RuteAdapter.viewHolder {
+        val view : RowRuteBinding = RowRuteBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+        return viewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: RuteAdapter.viewHolder, position: Int) {
+        manager = PrefManager(mContext)
+
+        holder.binding.txtRute.text = "Solok - Medan"
+
+        holder.binding.txtRute.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(p0: View?) {
+
+                manager.setRuteBoolean()
+                manager.setRute(manager.RUTE, holder.binding.txtRute.text.toString())
+                val intent = Intent(mContext, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                mContext.startActivity(intent)
+
+                (mContext as MainActivity).supportFragmentManager.findFragmentByTag("Rute Dialog")
+                    ?.let {
+                        (it as DialogFragment).dismiss()
+                    }//close dialog
+
+
+            }
+
+        })
+    }
+
+    override fun getItemCount(): Int {
+        return 10
+    }
+
+    class viewHolder(val binding: RowRuteBinding) : RecyclerView.ViewHolder(binding.root)
+}
