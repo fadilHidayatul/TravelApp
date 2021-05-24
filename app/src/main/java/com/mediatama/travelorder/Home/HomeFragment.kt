@@ -6,6 +6,7 @@ import android.app.DatePickerDialog.OnDateSetListener
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,8 +42,8 @@ class HomeFragment : Fragment() {
     private var xmonth : Int = 0
     private var xyear : Int = 0
     private var xday : Int = 0
-    private lateinit var tglPergi : String
-    private lateinit var tglPulang : String
+    private var tglPergi : String = "0000-00-00"
+    private var tglPulang : String = "0000-00-00"
 
 
     fun HomeFragment(){
@@ -138,23 +139,46 @@ class HomeFragment : Fragment() {
 
             var diff : Long = (date2.time - date1.time) / (1000 * 60 * 60 * 24)
 
-            if (diff < 0){
-                Alerter.create(this.activity)
-                    .setTitle("Tanggal Salah")
-                    .setText("Tanggal yang dimasukkan terbalik")
-                    .setIcon(R.drawable.ic_warning).setBackgroundColorRes(R.color.black).show()
+            when {
+                binding.selectedRuteHome.text.toString() == "Pilih Rute" -> {
+                    Alerter.create(this.activity)
+                        .setText("Harap Pilih Rute")
+                        .setIcon(R.drawable.ic_warning).setBackgroundColorRes(R.color.black).show()
+                }
+                binding.selectedMobilHome.text.toString() == "Pilih Mobil" -> {
+                    Alerter.create(this.activity)
+                        .setText("Harap Pilih Mobil")
+                        .setIcon(R.drawable.ic_warning).setBackgroundColorRes(R.color.black).show()
+                }
+                TextUtils.isEmpty(binding.jumlahKursi.text.toString()) -> {
+                    Alerter.create(this.activity)
+                        .setText("Masukkan Jumlah Kursi")
+                        .setIcon(R.drawable.ic_warning).setBackgroundColorRes(R.color.black).show()
+                }
+                tglPergi == "0000-00-00" || tglPulang == "0000-00-00" -> {
+                    Alerter.create(this.activity)
+                        .setText("Pilih Tanggal Pergi dan Pulang")
+                        .setIcon(R.drawable.ic_warning).setBackgroundColorRes(R.color.black).show()
+                }
+                diff < 0 -> {
+                    Alerter.create(this.activity)
+                        .setTitle("Tanggal Salah")
+                        .setText("Tanggal yang dimasukkan terbalik")
+                        .setIcon(R.drawable.ic_warning).setBackgroundColorRes(R.color.black).show()
 
-            }else{
-                var intent = Intent(context, SuccessPesanActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
+                }
+                else -> {
+                    var intent = Intent(context, SuccessPesanActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
 
-                manager.removeRuteBoolean()
-                manager.removeMobilBoolean()
+                    manager.removeRuteBoolean()
+                    manager.removeMobilBoolean()
 
-                Toast.makeText(requireContext(), "$finalrute\n$finalmobil\n$finalkursi\n$tglPergi\n$tglPulang", Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), "$finalrute\n$finalmobil\n$finalkursi\n$tglPergi\n$tglPulang", Toast.LENGTH_LONG).show()
 
+                }
             }
         }
     }
