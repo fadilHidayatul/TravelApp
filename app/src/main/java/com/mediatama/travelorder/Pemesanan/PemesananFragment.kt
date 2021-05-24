@@ -1,12 +1,11 @@
 package com.mediatama.travelorder.Pemesanan
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
-import com.mediatama.travelorder.R
+import androidx.fragment.app.Fragment
+import com.mediatama.travelorder.Pemesanan.Adapter.PemesananFragmentAdapter
 import com.mediatama.travelorder.databinding.FragmentPemesananBinding
 
 /**
@@ -22,8 +21,16 @@ class PemesananFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentPemesananBinding.inflate(inflater,container,false)
-        // Inflate the layout for this fragment
+        binding = FragmentPemesananBinding.inflate(inflater, container, false)
+
+        binding.tabLayout.setupWithViewPager(binding.viewPager)
+
+        val fragmentAdapter = PemesananFragmentAdapter(requireActivity().supportFragmentManager)
+        fragmentAdapter.addFragment(BelumBayarFragment(),"Belum Bayar")
+        fragmentAdapter.addFragment(SudahSelesaiFragment(),"Sudah Bayar")
+        binding.viewPager.adapter = fragmentAdapter
+
+
         return binding.root
     }
 
