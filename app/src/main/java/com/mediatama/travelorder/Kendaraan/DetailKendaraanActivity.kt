@@ -2,6 +2,7 @@ package com.mediatama.travelorder.Kendaraan
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import com.mediatama.travelorder.databinding.ActivityDetailKendaraanBinding
 
 class DetailKendaraanActivity : AppCompatActivity() {
@@ -16,4 +17,5 @@ class DetailKendaraanActivity : AppCompatActivity() {
             finish()
         }
     }
+
 }

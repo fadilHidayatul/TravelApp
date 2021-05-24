@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="12dp"
             android:background="@drawable/ic_input"
-            android:drawableEnd="@drawable/ic_username"
+            android:drawableEnd="@drawable/ic_username_detail"
             android:fontFamily="@font/dmsans_regular"
             android:hint="username"
             android:singleLine="true"

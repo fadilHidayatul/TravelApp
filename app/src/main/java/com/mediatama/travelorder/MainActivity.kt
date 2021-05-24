@@ -67,7 +67,18 @@ class MainActivity : AppCompatActivity() {
 
         })
 
-        changeFragment(HomeFragment(), HomeFragment::class.java.simpleName)
+        val intent = intent
+        var flag = intent.getIntExtra("FLAGPAGE",0)
+
+        if (flag == 3){
+            changeFragment(PemesananFragment(), PemesananFragment::class.java.simpleName)
+            binding.bottomNavigation.selectedItemId = R.id.nav_pemesanan
+        }else{
+            changeFragment(HomeFragment(), HomeFragment::class.java.simpleName)
+            binding.bottomNavigation.selectedItemId = R.id.nav_home
+        }
+
+
     }
 
     fun changeFragment(fragment: Fragment, tag: String) {

@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Kendaraan.DetailKendaraanActivity"></activity>
+        <activity android:name=".Pemesanan.DetailTransaksiActivity"></activity>
+        <activity android:name=".Pemesanan.SuccessUploadActivity" />
+        <activity android:name=".Pemesanan.UploadBuktiActivity" />
+        <activity android:name=".Kendaraan.DetailKendaraanActivity" />
         <activity android:name=".Home.SuccessPesanActivity" />
         <activity android:name=".Home.RuteFragment" />
         <activity android:name=".LoginRegister.SuccessRegisterActivity" />
@@ -27,6 +30,16 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.mediatama.android.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_path" />
+        </provider>
     </application>
 
 </manifest>
