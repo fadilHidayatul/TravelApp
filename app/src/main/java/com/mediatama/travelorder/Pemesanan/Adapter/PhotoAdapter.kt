@@ -20,6 +20,7 @@ class PhotoAdapter(context: Context, listImageUploaded: ArrayList<String>) : Rec
     override fun onBindViewHolder(holder: PhotoAdapter.viewHolder, position: Int) {
         var uri = Uri.parse(listImage!![position])
         holder.binding.imgUploaded.setImageURI(uri)
+
     }
 
     override fun getItemCount(): Int {
