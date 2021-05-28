@@ -7,19 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
+import com.mediatama.travelorder.Home.Model.Rute
 import com.mediatama.travelorder.MainActivity
 import com.mediatama.travelorder.SharedPreferences.PrefManager
 import com.mediatama.travelorder.databinding.RowRuteBinding
 
 
-class RuteAdapter(context: Context?) : RecyclerView.Adapter<RuteAdapter.viewHolder>() {
-    private lateinit var mContext: Context
+class RuteAdapter(context: Context?, databean: ArrayList<Rute.DATABean>) : RecyclerView.Adapter<RuteAdapter.viewHolder>() {
+    private var mContext: Context = context!!
     private lateinit var manager : PrefManager
 
+    private var listRute = databean
 
-    init {
-        mContext = context!!
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RuteAdapter.viewHolder {
         val view : RowRuteBinding = RowRuteBinding.inflate(
@@ -33,13 +32,15 @@ class RuteAdapter(context: Context?) : RecyclerView.Adapter<RuteAdapter.viewHold
     override fun onBindViewHolder(holder: RuteAdapter.viewHolder, position: Int) {
         manager = PrefManager(mContext)
 
-        holder.binding.txtRute.text = "Solok - Medan"
+        holder.binding.txtRute.text = listRute[position].rute_awal + "-" + listRute[position].rute_tujuan
 
         holder.binding.txtRute.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
 
                 manager.setRuteBoolean()
+                manager.setIdRute(manager.IDRUTE, listRute[position].id_rute)
                 manager.setRute(manager.RUTE, holder.binding.txtRute.text.toString())
+
                 val intent = Intent(mContext, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -57,7 +58,7 @@ class RuteAdapter(context: Context?) : RecyclerView.Adapter<RuteAdapter.viewHold
     }
 
     override fun getItemCount(): Int {
-        return 10
+        return listRute.size
     }
 
     class viewHolder(val binding: RowRuteBinding) : RecyclerView.ViewHolder(binding.root)

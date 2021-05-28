@@ -65,4 +65,7 @@ dependencies {
 
     //alertdialog
     implementation 'com.github.d-max:spots-dialog:1.1@aar'
+
+    //glide
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
 }

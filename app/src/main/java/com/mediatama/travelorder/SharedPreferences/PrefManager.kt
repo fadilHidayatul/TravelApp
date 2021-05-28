@@ -11,14 +11,23 @@ class PrefManager(context: Context) {
     var mcontext: Context? = null
 
     var PRIVATE_MODE : Int = 0
-
     val PREF_MANAGER : String = "TRAVEL"
     val SESSION_KEY : String = "KEY"
 
+    val IDRUTE : String = "0"
     val RUTE : String = "PADANG"
     val GETRUTE : String = "GETRUTE"
+    val IDMOBIL : String = "00"
     val MOBIL : String = "BRIO"
     val GETMOBIL : String = "GETMOBIL"
+
+    val IDUSER : String = "ID"
+    val USERNAME : String = "UNAME"
+    val NAMA : String = "NAMA"
+    val JEKEL : String = "JEKEL"
+    val HP : String = "HP"
+    val TOKEN : String = "TOKEN"
+
 
     //initialize Shared Preferences
     init {
@@ -47,6 +56,13 @@ class PrefManager(context: Context) {
     fun getRute() : String? {
         return SP!!.getString(RUTE, "")
     }
+    fun setIdRute(key: String?, value: String?){
+        editor!!.putString(key,value)
+        editor!!.commit()
+    }
+    fun getIdRute() : String? {
+        return SP!!.getString(IDRUTE,"")
+    }
 
     //Punya Mobil
     fun setMobilBoolean(){
@@ -67,7 +83,74 @@ class PrefManager(context: Context) {
     fun getMobil() : String? {
         return SP!!.getString(MOBIL, "")
     }
+    fun setIdMobil(key: String?,value: String?){
+        editor!!.putString(key,value)
+        editor!!.commit()
+    }
+    fun getIdMobil() : String {
+        return SP!!.getString(IDMOBIL, "")!!
+    }
 
+    //Punya User
+    fun saveSession(){
+        editor?.putBoolean(SESSION_KEY,true)
+        editor?.commit()
+    }
+    fun getSession() : Boolean{
+        return SP!!.getBoolean(SESSION_KEY,false)
+    }
+    fun removeSession(){
+        editor?.putBoolean(SESSION_KEY,false)
+        editor?.commit()
+    }
+
+    fun setID(key: String?,value: String?){
+        editor?.putString(key,value)
+        editor?.commit()
+    }
+    fun getID() : String {
+        return SP!!.getString(IDUSER,"")!!
+    }
+
+    fun setUsername(key: String?, value: String?){
+        editor?.putString(key,value)
+        editor?.commit()
+    }
+    fun getUsername() : String{
+        return SP!!.getString(USERNAME,"")!!
+    }
+
+    fun setNama(key: String?, value: String?){
+        editor?.putString(key,value)
+        editor?.commit()
+    }
+    fun getNama() : String {
+        return SP!!.getString(NAMA,"")!!
+    }
+
+    fun setJekel(key: String?, value: String?){
+        editor?.putString(key,value)
+        editor?.commit()
+    }
+    fun getJekel() : String {
+        return SP?.getString(JEKEL,"")!!
+    }
+
+    fun setHp(key: String?,value: String?){
+        editor!!.putString(key,value)
+        editor!!.commit()
+    }
+    fun getHp() : String {
+        return SP!!.getString(HP,"")!!
+    }
+
+    fun setToken(key: String?,value: String?){
+        editor?.putString(key,value)
+        editor?.commit()
+    }
+    fun getToken() : String {
+        return SP!!.getString(TOKEN,"")!!
+    }
 
 
 

@@ -1,30 +1,29 @@
 package com.mediatama.travelorder.Home
 
-import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.mediatama.travelorder.MainActivity
 import com.mediatama.travelorder.R
 import com.mediatama.travelorder.SharedPreferences.PrefManager
+import com.mediatama.travelorder.UtilsApi.ApiClient
 import com.mediatama.travelorder.databinding.FragmentHomeBinding
 import com.tapadoo.alerter.Alerter
+import okhttp3.ResponseBody
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.ZonedDateTime
-import java.time.temporal.ChronoUnit
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 
 /**
@@ -45,6 +44,9 @@ class HomeFragment : Fragment() {
     private var tglPergi : String = "0000-00-00"
     private var tglPulang : String = "0000-00-00"
 
+    private var idRute : String = ""
+    private var idKendaraan : String = ""
+
 
     fun HomeFragment(){
 
@@ -61,11 +63,15 @@ class HomeFragment : Fragment() {
         //if intent
         if (manager.getRuteBoleean()){
             binding.selectedRuteHome.text = manager.getRute()
+            idRute = manager.getIdRute()!!
         }else{
             binding.selectedRuteHome.clearComposingText()
         }
         if (manager.getMobilBoolean()){
             binding.selectedMobilHome.text = manager.getMobil()
+            idKendaraan = manager.getIdMobil()
+        }else{
+            binding.selectedMobilHome.clearComposingText()
         }
 
         buttonPesan()
@@ -133,9 +139,8 @@ class HomeFragment : Fragment() {
             var date1 : Date = sdf.parse(tglPergi)
             var date2 : Date = sdf.parse(tglPulang)
 
-            var finalrute : String = binding.selectedRuteHome.text.toString()
-            var finalmobil : String = binding.selectedMobilHome.text.toString()
-            var finalkursi : String = binding.jumlahKursi.text.toString()
+
+
 
             var diff : Long = (date2.time - date1.time) / (1000 * 60 * 60 * 24)
 
@@ -168,19 +173,53 @@ class HomeFragment : Fragment() {
 
                 }
                 else -> {
-                    var intent = Intent(context, SuccessPesanActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                    startActivity(intent)
 
-                    manager.removeRuteBoolean()
-                    manager.removeMobilBoolean()
 
-                    Toast.makeText(requireContext(), "$finalrute\n$finalmobil\n$finalkursi\n$tglPergi\n$tglPulang", Toast.LENGTH_LONG).show()
-
+                    sendPesananToApi()
                 }
             }
         }
+    }
+
+    private fun sendPesananToApi() {
+        manager = PrefManager(requireContext())
+        val sdf = SimpleDateFormat("yyyy-MM-dd")
+        val currentDateandTime = sdf.format(Date())
+
+        ApiClient.getClient.addPesanan(
+            manager.getID(),
+            idRute,
+            idKendaraan,
+            currentDateandTime,
+            tglPergi,
+            tglPulang,
+            binding.jumlahKursi.text.toString()
+            ).enqueue(object :Callback<ResponseBody>{
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful){
+                    val jsonO = JSONObject(response.body()!!.string())
+                    if (jsonO.getString("status") == "200"){
+
+                        manager.removeRuteBoolean()
+                        manager.removeMobilBoolean()
+
+                        val intent = Intent(context, SuccessPesanActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        startActivity(intent)
+
+                    }else{
+                        Toast.makeText(context, jsonO.getString("message"),Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Toast.makeText(context, t.localizedMessage,Toast.LENGTH_LONG).show()
+            }
+
+        })
+
     }
 
 

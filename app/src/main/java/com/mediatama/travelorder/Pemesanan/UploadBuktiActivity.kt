@@ -18,6 +18,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.loader.content.CursorLoader
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.mediatama.travelorder.Pemesanan.Adapter.PhotoAdapter
 import com.mediatama.travelorder.R
 import com.mediatama.travelorder.UtilsApi.ApiClient
@@ -34,6 +35,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
 import java.io.IOException
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -65,6 +67,9 @@ class UploadBuktiActivity : AppCompatActivity() {
         dialog = SpotsDialog.Builder().setMessage("Please Wait").setCancelable(false).setContext(context).build()
         listImageUploaded = ArrayList()
         imageSelected = ArrayList()
+        val intent = intent
+
+        deskripsiPesanan(intent)
 
         if (ContextCompat.checkSelfPermission(
                 applicationContext,
@@ -97,6 +102,22 @@ class UploadBuktiActivity : AppCompatActivity() {
 
         }
 
+    }
+
+    private fun deskripsiPesanan(intent: Intent) {
+        val localeID = Locale("in", "ID")
+        val formatRupiah: NumberFormat = NumberFormat.getCurrencyInstance(localeID)
+
+        Glide.with(context)
+            .load(ApiClient.MOBIL_IMG_URL+intent.getStringExtra("foto"))
+            .fitCenter()
+            .placeholder(R.color.black70)
+            .into(binding.imgKendaraan)
+        binding.ruteUpload.text = "Rute "+intent.getStringExtra("rute1") +" "+intent.getStringExtra("rute2")
+        binding.mobilUpload.text = intent.getStringExtra("mobil")
+        binding.tarifUpload.text = formatRupiah.format(intent.getStringExtra("tarif")!!.toDouble())
+        binding.tglFromUpload.text = intent.getStringExtra("from")
+        binding.tglToUpload.text = intent.getStringExtra("to")
     }
 
     private fun uploadImage() {
