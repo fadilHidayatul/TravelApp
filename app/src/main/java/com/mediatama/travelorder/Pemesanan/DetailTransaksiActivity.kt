@@ -40,7 +40,6 @@ class DetailTransaksiActivity : AppCompatActivity() {
         binding.rute.text = intent.getStringExtra("rute1")+" - "+intent.getStringExtra("rute2")
 
         binding.tarif.text = formatRupiah.format(intent.getStringExtra("tarif")!!.toDouble())
-
         binding.tglPergi.text = intent.getStringExtra("from")
         binding.tglKembali.text = intent.getStringExtra("to")
     }
