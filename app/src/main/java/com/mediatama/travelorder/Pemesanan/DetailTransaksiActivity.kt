@@ -38,7 +38,6 @@ class DetailTransaksiActivity : AppCompatActivity() {
         binding.idPesanan.text = intent.getStringExtra("id")+"-"+tglpesan.replace("-", "")
         binding.pemesan.text = manager.getNama()
         binding.rute.text = intent.getStringExtra("rute1")+" - "+intent.getStringExtra("rute2")
-
         binding.tarif.text = formatRupiah.format(intent.getStringExtra("tarif")!!.toDouble())
         binding.tglPergi.text = intent.getStringExtra("from")
         binding.tglKembali.text = intent.getStringExtra("to")
