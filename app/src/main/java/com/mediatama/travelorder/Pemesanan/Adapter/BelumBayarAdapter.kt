@@ -32,14 +32,15 @@ class BelumBayarAdapter(context: Context?, databean: ArrayList<BelumBayar.DATABe
         holder.binding.tglToBelum.text = data.tgl_kembali
 
         holder.binding.uploadBukti.setOnClickListener {
-            Toast.makeText(mContext,data.id_pemesanan,Toast.LENGTH_SHORT).show()
+
             val intent = Intent(mContext,UploadBuktiActivity::class.java)
-            intent.putExtra("idPesanan", data.id_pemesanan)
+            intent.putExtra("idPesanan", data.id_pemesanan.toInt())
             intent.putExtra("foto", data.foto)
             intent.putExtra("rute1", data.rute_awal)
             intent.putExtra("rute2", data.rute_tujuan)
             intent.putExtra("mobil", data.mobil)
             intent.putExtra("tarif", data.tarif)
+            intent.putExtra("pesan", data.jumlah_pesan)
             intent.putExtra("from", data.tgl_pergi)
             intent.putExtra("to", data.tgl_kembali)
             mContext.startActivity(intent)

@@ -1,13 +1,16 @@
 package com.mediatama.travelorder.Profile
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.crowdfire.cfalertdialog.CFAlertDialog
 import com.mediatama.travelorder.LoginRegister.LoginActivity
 
 import com.mediatama.travelorder.R
@@ -68,27 +71,30 @@ class ProfileFragment : Fragment() {
 
     private fun doLogout() {
         binding.logout.setOnClickListener(object : View.OnClickListener{
+            @SuppressLint("ResourceAsColor")
             override fun onClick(v: View?) {
-                val builder = AlertDialog.Builder(v!!.context)
-                builder.setTitle("Keluar Aplikasi")
-                    .setCancelable(true)
-                    .setPositiveButton("Ya"
-                    ) { p0, p1 ->
-                        manager.removeSession()
-                        activity!!.finish()
+                var builder = CFAlertDialog.Builder(requireContext())
+                    .setDialogStyle(CFAlertDialog.CFAlertStyle.BOTTOM_SHEET)
+                    .setTitle("LOGOUT")
+                    .setMessage("Apakah anda akan keluar dari aplikasi? Anda akan login ulang kembali")
+                    .addButton("Keluar",-1,-1,CFAlertDialog.CFAlertActionStyle.NEGATIVE,CFAlertDialog.CFAlertActionAlignment.JUSTIFIED,object : DialogInterface.OnClickListener{
+                        override fun onClick(p0: DialogInterface?, p1: Int) {
+                            manager.removeSession()
+                            activity!!.finish()
 
-                        val intent = Intent(v.context, LoginActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                        startActivity(intent)
-                    }
-                    .setNegativeButton("Tidak"
-                    ){ dialog,int->
-                        dialog.cancel()
-                    }
+                            val intent = Intent(v!!.context, LoginActivity::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                            startActivity(intent)
+                        }
+                    })
+                    .addButton("Tidak",Color.parseColor("#66040404"),Color.parseColor("#FFFFFF"),CFAlertDialog.CFAlertActionStyle.DEFAULT,CFAlertDialog.CFAlertActionAlignment.JUSTIFIED, object : DialogInterface.OnClickListener{
+                        override fun onClick(p0: DialogInterface?, p1: Int) {
+                            p0!!.dismiss()
+                        }
+                    })
 
-                val alertDialog : AlertDialog = builder.create()
-                alertDialog.show()
+                builder.show()
             }
 
         })

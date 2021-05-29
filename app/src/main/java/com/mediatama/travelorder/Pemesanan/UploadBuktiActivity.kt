@@ -1,5 +1,6 @@
 package com.mediatama.travelorder.Pemesanan
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -19,8 +20,10 @@ import androidx.core.content.FileProvider
 import androidx.loader.content.CursorLoader
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.crowdfire.cfalertdialog.CFAlertDialog
 import com.mediatama.travelorder.Pemesanan.Adapter.PhotoAdapter
 import com.mediatama.travelorder.R
+import com.mediatama.travelorder.SharedPreferences.PrefManager
 import com.mediatama.travelorder.UtilsApi.ApiClient
 import com.mediatama.travelorder.databinding.ActivityUploadBuktiBinding
 import com.tapadoo.alerter.Alerter
@@ -44,6 +47,7 @@ import kotlin.collections.ArrayList
 class UploadBuktiActivity : AppCompatActivity() {
     private lateinit var binding : ActivityUploadBuktiBinding
     private lateinit var context: Context
+    private lateinit var manager : PrefManager
     var dialog: android.app.AlertDialog? = null
 
     private lateinit var adapterPhoto : PhotoAdapter
@@ -57,6 +61,8 @@ class UploadBuktiActivity : AppCompatActivity() {
 
     private var listImageUploaded : ArrayList<String>? = null
     private var imageSelected : ArrayList<String>? = null
+    private var idPesanan : Int = 0
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,10 +70,15 @@ class UploadBuktiActivity : AppCompatActivity() {
         binding = ActivityUploadBuktiBinding.inflate(layoutInflater)
         setContentView(binding.root)
         context = this
-        dialog = SpotsDialog.Builder().setMessage("Please Wait").setCancelable(false).setContext(context).build()
+        manager = PrefManager(context)
+        val intent = intent
+        dialog = SpotsDialog.Builder().setMessage("Please Wait").setCancelable(false).setContext(
+            context
+        ).build()
         listImageUploaded = ArrayList()
         imageSelected = ArrayList()
-        val intent = intent
+
+        idPesanan = intent.getIntExtra("idPesanan",0)
 
         deskripsiPesanan(intent)
 
@@ -97,7 +108,36 @@ class UploadBuktiActivity : AppCompatActivity() {
                     .setText("Harap upload bukti pembayaran")
                     .setIcon(R.drawable.ic_warning).setBackgroundColorRes(R.color.red).show()
             }else{
-                successUpload()
+                val builder = CFAlertDialog.Builder(this)
+                    .setDialogStyle(CFAlertDialog.CFAlertStyle.ALERT)
+                    .setTitle("Pemberitahuan")
+                    .setMessage("Apakah anda akan mengupload bukti pembayaran ini?")
+                    .addButton(
+                        "YA",
+                        -1,
+                        -1,
+                        CFAlertDialog.CFAlertActionStyle.POSITIVE,
+                        CFAlertDialog.CFAlertActionAlignment.JUSTIFIED,
+                        object : DialogInterface.OnClickListener {
+                            override fun onClick(p0: DialogInterface?, p1: Int) {
+                                successUpload()
+                                p0!!.dismiss()
+                            }
+
+                        })
+                    .addButton(
+                        "TIDAK",
+                        -1,
+                        -1,
+                        CFAlertDialog.CFAlertActionStyle.NEGATIVE,
+                        CFAlertDialog.CFAlertActionAlignment.JUSTIFIED,
+                        object : DialogInterface.OnClickListener {
+                            override fun onClick(p0: DialogInterface?, p1: Int) {
+                                p0!!.dismiss()
+                            }
+                        })
+
+                builder.show()
             }
 
         }
@@ -109,12 +149,13 @@ class UploadBuktiActivity : AppCompatActivity() {
         val formatRupiah: NumberFormat = NumberFormat.getCurrencyInstance(localeID)
 
         Glide.with(context)
-            .load(ApiClient.MOBIL_IMG_URL+intent.getStringExtra("foto"))
+            .load(ApiClient.MOBIL_IMG_URL + intent.getStringExtra("foto"))
             .fitCenter()
             .placeholder(R.color.black70)
             .into(binding.imgKendaraan)
         binding.ruteUpload.text = "Rute "+intent.getStringExtra("rute1") +" "+intent.getStringExtra("rute2")
         binding.mobilUpload.text = intent.getStringExtra("mobil")
+        binding.pesananUpload.text = intent.getStringExtra("pesan")+" kursi dipesan"
         binding.tarifUpload.text = formatRupiah.format(intent.getStringExtra("tarif")!!.toDouble())
         binding.tglFromUpload.text = intent.getStringExtra("from")
         binding.tglToUpload.text = intent.getStringExtra("to")
@@ -156,7 +197,6 @@ class UploadBuktiActivity : AppCompatActivity() {
             )
         }
     }
-
     private fun requestCameraPermission() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(
                 this,
@@ -220,7 +260,7 @@ class UploadBuktiActivity : AppCompatActivity() {
     @Throws(IOException::class)
     private fun getImageFile(): File? {
         var timeStamp : String = SimpleDateFormat("yyyyMMdd_hhmmss").format(Date())
-        var imageName : String = "jpg_$timeStamp"
+        var imageName = "jpg_$timeStamp"
 
         var storageDirectory : File = getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!
         var imageFile = File.createTempFile(imageName, ".jpg", storageDirectory)
@@ -279,24 +319,26 @@ class UploadBuktiActivity : AppCompatActivity() {
     }
 
     private fun successUpload() {
-        var imagePart = arrayOfNulls<MultipartBody.Part>(imageSelected!!.size)
+        val imagePart = arrayOfNulls<MultipartBody.Part>(imageSelected!!.size)
         for (i in 0 until imageSelected!!.size){
-            var file = File(imageSelected!![i])
+            val file = File(imageSelected!![i])
             var propertyImage = RequestBody.create(MediaType.parse("multipart/form-data"), file)
-            imagePart[i] = MultipartBody.Part.createFormData("image[]", file.name, propertyImage)
+            imagePart[i] = MultipartBody.Part.createFormData("upload_bukti[]", file.name, propertyImage)
         }
+
         dialog!!.show()
-        ApiClient.getClient.uploadBuktiBayar(imagePart).enqueue(object : Callback<ResponseBody> {
+        ApiClient.getClient.uploadBuktiBayar(idPesanan,imagePart).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
                     dialog!!.dismiss()
+
                     val jsonO = JSONObject(response.body()!!.string())
                     if (jsonO.getString("status") == "200") {
                         val intent = Intent(applicationContext, SuccessUploadActivity::class.java)
                         startActivity(intent)
                         finish()
                     } else {
-                        Toast.makeText(context, jsonO.getString("status"), Toast.LENGTH_SHORT)
+                        Toast.makeText(context, jsonO.getString("message"), Toast.LENGTH_SHORT)
                             .show()
                     }
 
@@ -308,12 +350,16 @@ class UploadBuktiActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 dialog!!.dismiss()
-                Toast.makeText(context, "Koneksi Internet", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Koneksi Internet Anda Bermasalah", Toast.LENGTH_SHORT)
+                    .show()
             }
 
         })
 
+    }
 
+    private fun createPartFromString(any: Any): RequestBody {
+        TODO("Not yet implemented")
     }
 
     fun finishUpload(view: View) {

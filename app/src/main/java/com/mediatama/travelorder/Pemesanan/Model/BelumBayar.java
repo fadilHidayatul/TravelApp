@@ -8,7 +8,7 @@ public class BelumBayar {
      * success : 0
      * status : 200
      * message : Data ada
-     * DATA : [{"id_pemesanan":"2","id_pelanggan":"99","rute_awal":"Solok","rute_tujuan":"Padang","mobil":"Nissan Juke","foto":"nissan.jpg","tgl_pergi":"2021-05-01","tgl_kembali":"2021-05-11","tarif":"21000"},{"id_pemesanan":"3","id_pelanggan":"99","rute_awal":"Solok","rute_tujuan":"Padang","mobil":"Nissan Juke","foto":"nissan.jpg","tgl_pergi":"2021-05-01","tgl_kembali":"2021-05-11","tarif":"21000"}]
+     * DATA : [{"id_pemesanan":"2","id_pelanggan":"4","rute_awal":"Solok","rute_tujuan":"Padang","mobil":"Toyota Yaris","jumlah_pesan":"1","foto":"yaris.jpg","tgl_pergi":"2021-05-01","tgl_kembali":"2021-05-11","tarif":"21000"},{"id_pemesanan":"3","id_pelanggan":"4","rute_awal":"Solok","rute_tujuan":"Padang","mobil":"Nissan Juke","jumlah_pesan":"1","foto":"nissan.jpg","tgl_pergi":"2021-05-01","tgl_kembali":"2021-05-11","tarif":"21000"},{"id_pemesanan":"17","id_pelanggan":"4","rute_awal":"Solok","rute_tujuan":"Padang","mobil":"Honda Brio","jumlah_pesan":"6","foto":"brio.jpg","tgl_pergi":"2021-05-28","tgl_kembali":"2021-05-31","tarif":"21000"}]
      */
 
     private int success;
@@ -51,11 +51,12 @@ public class BelumBayar {
     public static class DATABean {
         /**
          * id_pemesanan : 2
-         * id_pelanggan : 99
+         * id_pelanggan : 4
          * rute_awal : Solok
          * rute_tujuan : Padang
-         * mobil : Nissan Juke
-         * foto : nissan.jpg
+         * mobil : Toyota Yaris
+         * jumlah_pesan : 1
+         * foto : yaris.jpg
          * tgl_pergi : 2021-05-01
          * tgl_kembali : 2021-05-11
          * tarif : 21000
@@ -66,6 +67,7 @@ public class BelumBayar {
         private String rute_awal;
         private String rute_tujuan;
         private String mobil;
+        private String jumlah_pesan;
         private String foto;
         private String tgl_pergi;
         private String tgl_kembali;
@@ -109,6 +111,14 @@ public class BelumBayar {
 
         public void setMobil(String mobil) {
             this.mobil = mobil;
+        }
+
+        public String getJumlah_pesan() {
+            return jumlah_pesan;
+        }
+
+        public void setJumlah_pesan(String jumlah_pesan) {
+            this.jumlah_pesan = jumlah_pesan;
         }
 
         public String getFoto() {
