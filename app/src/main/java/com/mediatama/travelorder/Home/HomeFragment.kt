@@ -4,7 +4,7 @@ import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +16,7 @@ import com.mediatama.travelorder.R
 import com.mediatama.travelorder.SharedPreferences.PrefManager
 import com.mediatama.travelorder.UtilsApi.ApiClient
 import com.mediatama.travelorder.databinding.FragmentHomeBinding
+import com.shawnlin.numberpicker.NumberPicker
 import com.tapadoo.alerter.Alerter
 import okhttp3.ResponseBody
 import org.json.JSONObject
@@ -46,7 +47,10 @@ class HomeFragment : Fragment() {
 
     private var idRute : String = ""
     private var idKendaraan : String = ""
+    private var kapasitas : Int = 0
+    private var jumlahPesanKursi : String = ""
 
+    private lateinit var pickerVals: Array<String>
 
     fun HomeFragment(){
 
@@ -59,6 +63,7 @@ class HomeFragment : Fragment() {
         manager = PrefManager(requireContext())
 
         showPilihan()
+        numberPicker()
 
         //if intent
         if (manager.getRuteBoleean()){
@@ -70,6 +75,7 @@ class HomeFragment : Fragment() {
         if (manager.getMobilBoolean()){
             binding.selectedMobilHome.text = manager.getMobil()
             idKendaraan = manager.getIdMobil()
+            kapasitas = manager.getKapasitasMobil().toInt()
         }else{
             binding.selectedMobilHome.clearComposingText()
         }
@@ -77,6 +83,19 @@ class HomeFragment : Fragment() {
         buttonPesan()
 
         return binding.root
+    }
+
+    private fun numberPicker() {
+        pickerVals = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9")
+
+        binding.jumlahKursi.minValue = 1
+        binding.jumlahKursi.maxValue = 9
+        binding.jumlahKursi.displayedValues = pickerVals
+
+        binding.jumlahKursi.setOnValueChangedListener { numberPicker, i, i1 ->
+            val valuePicker1: Int = binding.jumlahKursi.value
+            jumlahPesanKursi = valuePicker1.toString()
+        }
     }
 
     private fun showPilihan() {
@@ -135,14 +154,11 @@ class HomeFragment : Fragment() {
 
     private fun buttonPesan() {
         binding.btnPesan.setOnClickListener {
-            var sdf = SimpleDateFormat("dd-MM-yyyy")
-            var date1 : Date = sdf.parse(tglPergi)
-            var date2 : Date = sdf.parse(tglPulang)
+            val sdf = SimpleDateFormat("dd-MM-yyyy")
+            val date1 : Date = sdf.parse(tglPergi)
+            val date2 : Date = sdf.parse(tglPulang)
 
-
-
-
-            var diff : Long = (date2.time - date1.time) / (1000 * 60 * 60 * 24)
+            val diff : Long = (date2.time - date1.time) / (1000 * 60 * 60 * 24)
 
             when {
                 binding.selectedRuteHome.text.toString() == "Pilih Rute" -> {
@@ -155,9 +171,10 @@ class HomeFragment : Fragment() {
                         .setText("Harap Pilih Mobil")
                         .setIcon(R.drawable.ic_warning).setBackgroundColorRes(R.color.black).show()
                 }
-                TextUtils.isEmpty(binding.jumlahKursi.text.toString()) -> {
+                binding.jumlahKursi.value > kapasitas ->{
                     Alerter.create(this.activity)
-                        .setText("Masukkan Jumlah Kursi")
+                        .setTitle("Kursi Tidak Tersedia")
+                        .setText("Pesanan paling banyak hanya bisa $kapasitas kursi")
                         .setIcon(R.drawable.ic_warning).setBackgroundColorRes(R.color.black).show()
                 }
                 tglPergi == "0000-00-00" || tglPulang == "0000-00-00" -> {
@@ -170,11 +187,8 @@ class HomeFragment : Fragment() {
                         .setTitle("Tanggal Salah")
                         .setText("Tanggal yang dimasukkan terbalik")
                         .setIcon(R.drawable.ic_warning).setBackgroundColorRes(R.color.black).show()
-
                 }
                 else -> {
-
-
                     sendPesananToApi()
                 }
             }
@@ -193,12 +207,12 @@ class HomeFragment : Fragment() {
             currentDateandTime,
             tglPergi,
             tglPulang,
-            binding.jumlahKursi.text.toString()
-            ).enqueue(object :Callback<ResponseBody>{
+            jumlahPesanKursi
+        ).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                if (response.isSuccessful){
+                if (response.isSuccessful) {
                     val jsonO = JSONObject(response.body()!!.string())
-                    if (jsonO.getString("status") == "200"){
+                    if (jsonO.getString("status") == "200") {
 
                         manager.removeRuteBoolean()
                         manager.removeMobilBoolean()
@@ -208,14 +222,15 @@ class HomeFragment : Fragment() {
                         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                         startActivity(intent)
 
-                    }else{
-                        Toast.makeText(context, jsonO.getString("message"),Toast.LENGTH_LONG).show()
+                    } else {
+                        Toast.makeText(context, jsonO.getString("message"), Toast.LENGTH_LONG)
+                            .show()
                     }
                 }
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                Toast.makeText(context, t.localizedMessage,Toast.LENGTH_LONG).show()
+                Toast.makeText(context, t.localizedMessage, Toast.LENGTH_LONG).show()
             }
 
         })

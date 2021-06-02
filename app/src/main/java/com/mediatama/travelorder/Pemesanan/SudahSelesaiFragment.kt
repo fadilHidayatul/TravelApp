@@ -42,12 +42,22 @@ class SudahSelesaiFragment : Fragment() {
         return binding.root
     }
 
+    private fun data(){
+        binding.recyclerSudahBayar.visibility = View.VISIBLE
+        binding.noData.visibility = View.GONE
+    }
+    private fun noData(){
+        binding.recyclerSudahBayar.visibility = View.GONE
+        binding.noData.visibility = View.VISIBLE
+    }
+
     private fun showListSudahBayar() {
         ApiClient.getClient.pesananSudahBayar(manager.getID()).enqueue(object : Callback<ResponseBody>{
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful){
                     val jsonO = JSONObject(response.body()!!.string())
                     if (jsonO.getString("status") == "200"){
+                        data()
                         val jsonA = jsonO.getJSONArray("DATA")
 
                         databean = ArrayList()
@@ -63,6 +73,7 @@ class SudahSelesaiFragment : Fragment() {
                         binding.recyclerSudahBayar.setHasFixedSize(true)
 
                     }else{
+                        noData()
                         Toast.makeText(context, jsonO.getString("message"), Toast.LENGTH_LONG).show()
                     }
                 }

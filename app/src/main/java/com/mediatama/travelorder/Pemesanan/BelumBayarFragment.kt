@@ -40,8 +40,16 @@ class BelumBayarFragment : Fragment() {
 
         showListBelumBayar()
 
-
         return binding.root
+    }
+
+    private fun data(){
+        binding.recyclerBelumBayar.visibility = View.VISIBLE
+        binding.noData.visibility = View.GONE
+    }
+    private fun noData(){
+        binding.recyclerBelumBayar.visibility = View.GONE
+        binding.noData.visibility = View.VISIBLE
     }
 
     private fun showListBelumBayar() {
@@ -50,6 +58,7 @@ class BelumBayarFragment : Fragment() {
                 if (response.isSuccessful){
                     val jsonO = JSONObject(response.body()!!.string())
                     if (jsonO.getString("status") == "200"){
+                        data()
                         val jsonA = jsonO.getJSONArray("DATA")
 
                         databean = ArrayList()
@@ -66,6 +75,7 @@ class BelumBayarFragment : Fragment() {
                         binding.recyclerBelumBayar.setHasFixedSize(true)
 
                     }else{
+                        noData()
                         Toast.makeText(context, jsonO.getString("message"),Toast.LENGTH_LONG).show()
                     }
                 }

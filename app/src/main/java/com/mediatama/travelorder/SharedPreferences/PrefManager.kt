@@ -20,6 +20,7 @@ class PrefManager(context: Context) {
     val IDMOBIL : String = "00"
     val MOBIL : String = "BRIO"
     val GETMOBIL : String = "GETMOBIL"
+    val KAPASITAS : String = "000"
 
     val IDUSER : String = "ID"
     val USERNAME : String = "UNAME"
@@ -89,6 +90,13 @@ class PrefManager(context: Context) {
     }
     fun getIdMobil() : String {
         return SP!!.getString(IDMOBIL, "")!!
+    }
+    fun setKapasitasMobil(key: String?,value: String?){
+        editor!!.putString(key,value)
+        editor!!.commit()
+    }
+    fun getKapasitasMobil() : String {
+        return SP!!.getString(KAPASITAS, "")!!
     }
 
     //Punya User

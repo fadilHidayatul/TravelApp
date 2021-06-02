@@ -30,6 +30,7 @@ class MobilAdapter(context: Context?, databean: ArrayList<SelectKendaraan.DATABe
             manager.setMobilBoolean()
             manager.setMobil(manager.MOBIL,holder.binding.txtMobil.text.toString())
             manager.setIdMobil(manager.IDMOBIL, listMobil[position].id_kendaraan)
+            manager.setKapasitasMobil(manager.KAPASITAS, listMobil[position].kapasitas)
 
             var intent : Intent = Intent(mContext,MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK

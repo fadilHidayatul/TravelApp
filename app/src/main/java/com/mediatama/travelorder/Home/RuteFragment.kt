@@ -72,7 +72,7 @@ class RuteFragment : DialogFragment() {
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                Toast.makeText(context,t.localizedMessage,Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(),t.localizedMessage,Toast.LENGTH_LONG).show()
             }
 
         })
