@@ -158,7 +158,7 @@ class UploadBuktiActivity : AppCompatActivity() {
         binding.pesananUpload.text = intent.getStringExtra("pesan")+" kursi dipesan"
         binding.tarifUpload.text = formatRupiah.format(intent.getStringExtra("tarif")!!.toDouble())
         binding.tglFromUpload.text = intent.getStringExtra("from")
-        binding.tglToUpload.text = intent.getStringExtra("to")
+//        binding.tglToUpload.text = intent.getStringExtra("to")
     }
 
     private fun uploadImage() {

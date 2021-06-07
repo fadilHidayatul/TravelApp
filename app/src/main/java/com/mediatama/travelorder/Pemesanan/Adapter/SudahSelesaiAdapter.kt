@@ -28,7 +28,6 @@ class SudahSelesaiAdapter(context: Context?, databean: ArrayList<SudahSelesai.DA
         holder.binding.ruteSudah.text = data.rute_awal +"-"+ data.rute_tujuan
         holder.binding.mobilSudah.text = data.mobil
         holder.binding.tglFromSudah.text = data.tgl_pergi
-        holder.binding.tglToSudah.text = data.tgl_kembali
 
         holder.binding.seeDetailTransaksi.setOnClickListener {
             val intent = Intent(mContext,DetailTransaksiActivity::class.java)
@@ -36,9 +35,9 @@ class SudahSelesaiAdapter(context: Context?, databean: ArrayList<SudahSelesai.DA
             intent.putExtra("rute1", data.rute_awal)
             intent.putExtra("rute2", data.rute_tujuan)
             intent.putExtra("tarif", data.tarif)
-            intent.putExtra("pesan",data.tgl_pesan)
             intent.putExtra("from", data.tgl_pergi)
-            intent.putExtra("to", data.tgl_kembali)
+            intent.putExtra("jumlah", data.jml_pesan)
+
             mContext.startActivity(intent)
         }
     }

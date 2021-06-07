@@ -30,10 +30,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:text="dari "
+            android:text="Tanggal "
             android:fontFamily="@font/dmsans_regular"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
@@ -41,24 +41,10 @@
             android:text="01-01-2021"
             android:fontFamily="@font/dmsans_regular"
             android:textColor="@color/red"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-        <TextView
-            android:text=" sampai "
-            android:fontFamily="@font/dmsans_regular"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:id="@+id/tgl_to_sudah"
-            android:text="31-01-2021"
-            android:fontFamily="@font/dmsans_regular"
-            android:textColor="@color/red"
-            android:textSize="18sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+
     </LinearLayout>
 
     <LinearLayout

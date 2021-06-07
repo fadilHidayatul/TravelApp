@@ -47,9 +47,7 @@ interface ApiInterface {
         @Field("pelanggan") idPelanggan: String?,
         @Field("rute") idRute: String?,
         @Field("mobil") idKendaraan: String?,
-        @Field("tgl_pesan") tglPesan: String?,
         @Field("tgl_from") from: String?,
-        @Field("tgl_to") to: String?,
         @Field("jumlah_kursi") jumlahKursi: String?
     ) : Call<ResponseBody>
 
@@ -65,12 +63,6 @@ interface ApiInterface {
     fun pesananSudahBayar(
         @Field("id_pelanggan") idPelanggan: String?
     ) : Call<ResponseBody>
-
-//    @Multipart
-//    @POST("upload_photo.php")
-//    fun uploadBuktiBayar(
-//        @Part filePart : Array<MultipartBody.Part?>?
-//    ) : Call<ResponseBody>
 
     @Multipart
     @POST("pemesanan/upload_bukti.php")

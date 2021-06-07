@@ -27,6 +27,15 @@
             android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+        <ImageView
+            android:id="@+id/downloadInvoice"
+            android:src="@drawable/ic_invoice"
+            android:tint="@color/black"
+            android:onClick="finishDetail"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_width="25dp"
+            android:layout_height="25dp"/>
     </RelativeLayout>
     
     <LinearLayout
@@ -310,14 +319,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
                             <TextView
-                                android:text="Tanggal Kembali"
+                                android:text="Jumlah Pesan Tiket"
                                 android:textSize="16sp"
                                 android:fontFamily="@font/dmsans_regular"
                                 android:textColor="@color/black"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
                             <TextView
-                                android:id="@+id/tglKembali"
+                                android:id="@+id/jumlah_tiket_sudah"
                                 android:text="01-01-2021"
                                 android:fontFamily="@font/dmsans_bold"
                                 android:textSize="20sp"

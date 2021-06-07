@@ -9,6 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mediatama.travelorder.Pemesanan.Model.BelumBayar
 import com.mediatama.travelorder.Pemesanan.UploadBuktiActivity
 import com.mediatama.travelorder.databinding.RowBelumBayarBinding
+import java.text.NumberFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class BelumBayarAdapter(context: Context?, databean: ArrayList<BelumBayar.DATABean>) : RecyclerView.Adapter<BelumBayarAdapter.viewHolder>() {
     private var mContext : Context = context!!
@@ -25,11 +28,12 @@ class BelumBayarAdapter(context: Context?, databean: ArrayList<BelumBayar.DATABe
 
     override fun onBindViewHolder(holder: BelumBayarAdapter.viewHolder, position: Int) {
         val data = listBelumBayar[position]
+        val localeID = Locale("in", "ID")
+        val formatRupiah: NumberFormat = NumberFormat.getCurrencyInstance(localeID)
 
         holder.binding.ruteBelum.text = "${data.rute_awal} - ${data.rute_tujuan}"
         holder.binding.mobilBelum.text = data.mobil
-        holder.binding.tglFromBelum.text = data.tgl_pergi
-        holder.binding.tglToBelum.text = data.tgl_kembali
+        holder.binding.tarifBelum.text = formatRupiah.format(data.tarif.toDouble())
 
         holder.binding.uploadBukti.setOnClickListener {
 
@@ -42,7 +46,6 @@ class BelumBayarAdapter(context: Context?, databean: ArrayList<BelumBayar.DATABe
             intent.putExtra("tarif", data.tarif)
             intent.putExtra("pesan", data.jumlah_pesan)
             intent.putExtra("from", data.tgl_pergi)
-            intent.putExtra("to", data.tgl_kembali)
             mContext.startActivity(intent)
         }
     }

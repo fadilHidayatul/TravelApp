@@ -8,7 +8,7 @@ public class SudahSelesai {
      * success : 0
      * status : 200
      * message : Data ada
-     * DATA : [{"id_pemesanan":"1","id_pelanggan":"4","rute_awal":"Solok","rute_tujuan":"Bukittinggi","mobil":"Nissan Juke","tgl_pesan":"2021-05-04","tgl_pergi":"2021-05-07","tgl_kembali":"2021-05-17","tarif":"24000"}]
+     * DATA : [{"id_pemesanan":"23","id_pelanggan":"5","rute_awal":"Solok","rute_tujuan":"Bukittinggi","mobil":"Toyota Yaris","tgl_pergi":"2021-06-04","jml_pesan":"3","tarif":"24000"}]
      */
 
     private int success;
@@ -50,14 +50,13 @@ public class SudahSelesai {
 
     public static class DATABean {
         /**
-         * id_pemesanan : 1
-         * id_pelanggan : 4
+         * id_pemesanan : 23
+         * id_pelanggan : 5
          * rute_awal : Solok
          * rute_tujuan : Bukittinggi
-         * mobil : Nissan Juke
-         * tgl_pesan : 2021-05-04
-         * tgl_pergi : 2021-05-07
-         * tgl_kembali : 2021-05-17
+         * mobil : Toyota Yaris
+         * tgl_pergi : 2021-06-04
+         * jml_pesan : 3
          * tarif : 24000
          */
 
@@ -66,9 +65,8 @@ public class SudahSelesai {
         private String rute_awal;
         private String rute_tujuan;
         private String mobil;
-        private String tgl_pesan;
         private String tgl_pergi;
-        private String tgl_kembali;
+        private String jml_pesan;
         private String tarif;
 
         public String getId_pemesanan() {
@@ -111,14 +109,6 @@ public class SudahSelesai {
             this.mobil = mobil;
         }
 
-        public String getTgl_pesan() {
-            return tgl_pesan;
-        }
-
-        public void setTgl_pesan(String tgl_pesan) {
-            this.tgl_pesan = tgl_pesan;
-        }
-
         public String getTgl_pergi() {
             return tgl_pergi;
         }
@@ -127,12 +117,12 @@ public class SudahSelesai {
             this.tgl_pergi = tgl_pergi;
         }
 
-        public String getTgl_kembali() {
-            return tgl_kembali;
+        public String getJml_pesan() {
+            return jml_pesan;
         }
 
-        public void setTgl_kembali(String tgl_kembali) {
-            this.tgl_kembali = tgl_kembali;
+        public void setJml_pesan(String jml_pesan) {
+            this.jml_pesan = jml_pesan;
         }
 
         public String getTarif() {

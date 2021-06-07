@@ -8,7 +8,7 @@ public class BelumBayar {
      * success : 0
      * status : 200
      * message : Data ada
-     * DATA : [{"id_pemesanan":"2","id_pelanggan":"4","rute_awal":"Solok","rute_tujuan":"Padang","mobil":"Toyota Yaris","jumlah_pesan":"1","foto":"yaris.jpg","tgl_pergi":"2021-05-01","tgl_kembali":"2021-05-11","tarif":"21000"},{"id_pemesanan":"3","id_pelanggan":"4","rute_awal":"Solok","rute_tujuan":"Padang","mobil":"Nissan Juke","jumlah_pesan":"1","foto":"nissan.jpg","tgl_pergi":"2021-05-01","tgl_kembali":"2021-05-11","tarif":"21000"},{"id_pemesanan":"17","id_pelanggan":"4","rute_awal":"Solok","rute_tujuan":"Padang","mobil":"Honda Brio","jumlah_pesan":"6","foto":"brio.jpg","tgl_pergi":"2021-05-28","tgl_kembali":"2021-05-31","tarif":"21000"}]
+     * DATA : [{"id_pemesanan":"2","id_pelanggan":"4","rute_awal":"Solok","rute_tujuan":"Padang","mobil":"Toyota Yaris","jumlah_pesan":"1","foto":"yaris.jpg","tgl_pergi":"2021-05-01","tarif":"21000"},{"id_pemesanan":"3","id_pelanggan":"4","rute_awal":"Solok","rute_tujuan":"Padang","mobil":"Nissan Juke","jumlah_pesan":"1","foto":"nissan.jpg","tgl_pergi":"2021-05-01","tarif":"21000"},{"id_pemesanan":"17","id_pelanggan":"4","rute_awal":"Solok","rute_tujuan":"Padang","mobil":"Honda Brio","jumlah_pesan":"6","foto":"brio.jpg","tgl_pergi":"2021-05-28","tarif":"21000"},{"id_pemesanan":"24","id_pelanggan":"4","rute_awal":"Solok","rute_tujuan":"Padang","mobil":"Honda Brio","jumlah_pesan":"3","foto":"brio.jpg","tgl_pergi":"2022-11-11","tarif":"21000"}]
      */
 
     private int success;
@@ -58,7 +58,6 @@ public class BelumBayar {
          * jumlah_pesan : 1
          * foto : yaris.jpg
          * tgl_pergi : 2021-05-01
-         * tgl_kembali : 2021-05-11
          * tarif : 21000
          */
 
@@ -70,7 +69,6 @@ public class BelumBayar {
         private String jumlah_pesan;
         private String foto;
         private String tgl_pergi;
-        private String tgl_kembali;
         private String tarif;
 
         public String getId_pemesanan() {
@@ -135,14 +133,6 @@ public class BelumBayar {
 
         public void setTgl_pergi(String tgl_pergi) {
             this.tgl_pergi = tgl_pergi;
-        }
-
-        public String getTgl_kembali() {
-            return tgl_kembali;
-        }
-
-        public void setTgl_kembali(String tgl_kembali) {
-            this.tgl_kembali = tgl_kembali;
         }
 
         public String getTarif() {

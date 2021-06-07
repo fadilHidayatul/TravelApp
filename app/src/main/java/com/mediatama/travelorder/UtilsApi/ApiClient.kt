@@ -9,6 +9,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 object ApiClient {
     var BASE_URL : String = "http://192.168.100.35/travelapp/"      //localhost
     var MOBIL_IMG_URL : String = "http://192.168.100.35/travelapp/img/mobil/"
+    var PDF_URL : String = "http://192.168.100.35/travelapp/pdf/"
+
+//    var BASE_URL : String = "http://192.168.100.70/travelapp/"      //Takana
+//    var MOBIL_IMG_URL : String = "http://192.168.100.70/travelapp/img/mobil/"
 
     val getClient : ApiInterface
         get() {
