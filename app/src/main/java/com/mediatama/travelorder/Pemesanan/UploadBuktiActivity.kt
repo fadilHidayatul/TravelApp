@@ -52,7 +52,6 @@ class UploadBuktiActivity : AppCompatActivity() {
 
     private lateinit var adapterPhoto : PhotoAdapter
 
-    private var REQUEST_PERMISSION_STORAGE : Int = 100
     private var REQUEST_PERMISSION_CAMERA : Int = 100
     private var REQUEST_TAKE_PICTURE_CODE : Int = 1
     private var REQUEST_GALLERY_PICTURE_CODE : Int = 2
@@ -162,12 +161,6 @@ class UploadBuktiActivity : AppCompatActivity() {
     }
 
     private fun uploadImage() {
-        if (ContextCompat.checkSelfPermission(
-                applicationContext,
-                android.Manifest.permission.READ_EXTERNAL_STORAGE
-            ) == PackageManager.PERMISSION_DENIED  ){
-            requestStoragePermission()
-        }
 
         if (listImageUploaded!!.size < 1){
             openFileimage()
@@ -179,24 +172,6 @@ class UploadBuktiActivity : AppCompatActivity() {
 
     }
 
-    private fun requestStoragePermission() {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(
-                this,
-                android.Manifest.permission.READ_EXTERNAL_STORAGE
-            )){
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),
-                REQUEST_PERMISSION_STORAGE
-            )
-        }else {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),
-                REQUEST_PERMISSION_STORAGE
-            )
-        }
-    }
     private fun requestCameraPermission() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(
                 this,
@@ -204,13 +179,13 @@ class UploadBuktiActivity : AppCompatActivity() {
             )){
             ActivityCompat.requestPermissions(
                 this,
-                arrayOf(android.Manifest.permission.CAMERA),
+                arrayOf(android.Manifest.permission.CAMERA, android.Manifest.permission.READ_EXTERNAL_STORAGE),
                 REQUEST_PERMISSION_CAMERA
             )
         }else{
             ActivityCompat.requestPermissions(
                 this,
-                arrayOf(android.Manifest.permission.CAMERA),
+                arrayOf(android.Manifest.permission.CAMERA, android.Manifest.permission.READ_EXTERNAL_STORAGE),
                 REQUEST_PERMISSION_CAMERA
             )
         }
@@ -234,7 +209,7 @@ class UploadBuktiActivity : AppCompatActivity() {
                         }
 
                         if (imageFile != null) {
-                            var imageUri: Uri = FileProvider.getUriForFile(
+                            val imageUri: Uri = FileProvider.getUriForFile(
                                 context,
                                 "com.mediatama.android.fileprovider",
                                 imageFile
@@ -259,11 +234,11 @@ class UploadBuktiActivity : AppCompatActivity() {
 
     @Throws(IOException::class)
     private fun getImageFile(): File? {
-        var timeStamp : String = SimpleDateFormat("yyyyMMdd_hhmmss").format(Date())
-        var imageName = "jpg_$timeStamp"
+        val timeStamp : String = SimpleDateFormat("yyyyMMdd_hhmmss").format(Date())
+        val imageName = "jpg_$timeStamp"
 
-        var storageDirectory : File = getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!
-        var imageFile = File.createTempFile(imageName, ".jpg", storageDirectory)
+        val storageDirectory : File = getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!
+        val imageFile = File.createTempFile(imageName, ".jpg", storageDirectory)
         pathTakePhoto = imageFile.absolutePath
 
         return imageFile
@@ -273,10 +248,10 @@ class UploadBuktiActivity : AppCompatActivity() {
         val projection = arrayOf(MediaStore.Images.Media.DATA)
         val loader = CursorLoader(applicationContext, uri, projection, null, null, null)
         val cursor : Cursor? = loader.loadInBackground()
-        var column_index : Int = cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+        val column_index : Int = cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
 
         cursor.moveToFirst()
-        var result = cursor.getString(column_index)
+        val result = cursor.getString(column_index)
         cursor.close()
 
         return result
@@ -322,8 +297,8 @@ class UploadBuktiActivity : AppCompatActivity() {
         val imagePart = arrayOfNulls<MultipartBody.Part>(imageSelected!!.size)
         for (i in 0 until imageSelected!!.size){
             val file = File(imageSelected!![i])
-            var propertyImage = RequestBody.create(MediaType.parse("multipart/form-data"), file)
-            imagePart[i] = MultipartBody.Part.createFormData("upload_bukti[]", file.name, propertyImage)
+            val propertyImage = RequestBody.create(MediaType.parse("multipart/form-data"), file)
+            imagePart[i] = MultipartBody.Part.createFormData("upload_bukti[]", file.name, propertyImage )
         }
 
         dialog!!.show()

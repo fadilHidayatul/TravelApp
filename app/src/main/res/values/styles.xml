@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
     </style>
 
     <!-- time picker  -->
@@ -20,6 +21,5 @@
         <item name="android:fontFamily">@font/dmsans_regular</item>
         <item name="android:textSize">16sp</item>
     </style>
-
 
 </resources>

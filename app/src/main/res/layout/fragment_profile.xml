@@ -39,6 +39,7 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"/>
                 <TextView
+                    android:id="@+id/changePicture"
                     android:text="Change\nPicture"
                     android:layout_below="@id/img_profil"
                     android:fontFamily="@font/dmsans_medium"

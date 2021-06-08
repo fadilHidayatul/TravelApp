@@ -71,6 +71,19 @@ interface ApiInterface {
         @Part filePart: Array<MultipartBody.Part?>?
     ) : Call<ResponseBody>
 
+    @Multipart
+    @POST("user/change_profil_pic.php")
+    fun changeProfilPic(
+        @Part("id_user") idUser : Int,
+        @Part filePart : MultipartBody.Part?
+    ) : Call<ResponseBody>
+
+    @FormUrlEncoded
+    @POST("user/load_profil_pic.php")
+    fun getProfilPic(
+        @Field("id_user") iduser : String
+    ) : Call<ResponseBody>
+
 
 
 

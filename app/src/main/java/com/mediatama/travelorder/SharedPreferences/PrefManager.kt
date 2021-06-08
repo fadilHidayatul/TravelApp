@@ -162,8 +162,6 @@ class PrefManager(context: Context) {
 
 
 
-
-
 }
 
 private fun SharedPreferences.Editor.putFloat(key: String?, value: Double?) {

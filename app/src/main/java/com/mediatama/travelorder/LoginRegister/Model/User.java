@@ -5,7 +5,7 @@ public class User {
     /**
      * status : 200
      * message : Success Login
-     * data : {"id_pelanggan":"4","username":"fadil","nama":"hidayatul","jenis_kelamin":"Laki-Laki","no_hp":"08123434","token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3RcL2RiX3RyYXZlbFwvIiwiYXVkIjoiaHR0cDpcL1wvbG9jYWxob3N0XC9kYl90cmF2ZWxcLyIsImlzc3VlZEF0IjoxNjIyMTY4NDU5LCJleHBpcmUiOjE2MjIxNzU2NTksImRhdGEiOnsidXNlcl9pZCI6IjQifX0.5QROlofRyDhsaYDc_bByWV6paAXdnwgITs5Plq-lD0M"}
+     * data : {"id_pelanggan":"5","username":"hasan","nama":"hasan","jenis_kelamin":"Laki-Laki","no_hp":"123456789","token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3RcL2RiX3RyYXZlbFwvIiwiYXVkIjoiaHR0cDpcL1wvbG9jYWxob3N0XC9kYl90cmF2ZWxcLyIsImlzc3VlZEF0IjoxNjIzMTQ1NDg2LCJleHBpcmUiOjE2MjMxNTI2ODYsImRhdGEiOnsidXNlcl9pZCI6IjUifX0.VLBlzq06Nu6uT3DiCP7cKBRdV7x56oPHEHq0APWfeh4"}
      */
 
     private int status;
@@ -38,12 +38,12 @@ public class User {
 
     public static class DataBean {
         /**
-         * id_pelanggan : 4
-         * username : fadil
-         * nama : hidayatul
+         * id_pelanggan : 5
+         * username : hasan
+         * nama : hasan
          * jenis_kelamin : Laki-Laki
-         * no_hp : 08123434
-         * token : eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3RcL2RiX3RyYXZlbFwvIiwiYXVkIjoiaHR0cDpcL1wvbG9jYWxob3N0XC9kYl90cmF2ZWxcLyIsImlzc3VlZEF0IjoxNjIyMTY4NDU5LCJleHBpcmUiOjE2MjIxNzU2NTksImRhdGEiOnsidXNlcl9pZCI6IjQifX0.5QROlofRyDhsaYDc_bByWV6paAXdnwgITs5Plq-lD0M
+         * no_hp : 123456789
+         * token : eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3RcL2RiX3RyYXZlbFwvIiwiYXVkIjoiaHR0cDpcL1wvbG9jYWxob3N0XC9kYl90cmF2ZWxcLyIsImlzc3VlZEF0IjoxNjIzMTQ1NDg2LCJleHBpcmUiOjE2MjMxNTI2ODYsImRhdGEiOnsidXNlcl9pZCI6IjUifX0.VLBlzq06Nu6uT3DiCP7cKBRdV7x56oPHEHq0APWfeh4
          */
 
         private String id_pelanggan;
