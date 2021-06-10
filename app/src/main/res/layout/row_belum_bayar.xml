@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@drawable/ic_bg_pesanan"
+    android:id="@+id/row_pesanan"
     android:orientation="vertical"
     android:paddingHorizontal="18dp"
     android:paddingVertical="8dp"
@@ -35,15 +36,35 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-    <TextView
-        android:id="@+id/upload_bukti"
-        android:text="Upload Bukti Bayar"
-        android:fontFamily="@font/dmsans_bold"
-        android:textColor="@color/yellow"
-        android:textSize="18sp"
-        android:gravity="center"
-        android:layout_gravity="bottom"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:weightSum="2"
+        android:layout_marginVertical="8dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/hapus_pesanan"
+            android:layout_weight="1"
+            android:text="Hapus Pesanan"
+            android:fontFamily="@font/dmsans_bold"
+            android:textColor="@color/red"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/upload_bukti"
+            android:layout_weight="1"
+            android:text="Upload Bukti Bayar"
+            android:fontFamily="@font/dmsans_bold"
+            android:textColor="@color/yellow"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+
 
 </LinearLayout>

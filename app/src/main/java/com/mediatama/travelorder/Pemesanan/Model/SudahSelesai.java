@@ -8,7 +8,7 @@ public class SudahSelesai {
      * success : 0
      * status : 200
      * message : Data ada
-     * DATA : [{"id_pemesanan":"23","id_pelanggan":"5","rute_awal":"Solok","rute_tujuan":"Bukittinggi","mobil":"Toyota Yaris","tgl_pergi":"2021-06-04","jml_pesan":"3","tarif":"24000"}]
+     * DATA : [{"id_pemesanan":"23","id_pelanggan":"5","rute_awal":"Solok","rute_tujuan":"Bukittinggi","mobil":"Toyota Yaris","tgl_pergi":"2021-06-04","jml_pesan":"3","tarif":"24000","invoice":""}]
      */
 
     private int success;
@@ -58,6 +58,7 @@ public class SudahSelesai {
          * tgl_pergi : 2021-06-04
          * jml_pesan : 3
          * tarif : 24000
+         * invoice :
          */
 
         private String id_pemesanan;
@@ -68,6 +69,7 @@ public class SudahSelesai {
         private String tgl_pergi;
         private String jml_pesan;
         private String tarif;
+        private String invoice;
 
         public String getId_pemesanan() {
             return id_pemesanan;
@@ -131,6 +133,14 @@ public class SudahSelesai {
 
         public void setTarif(String tarif) {
             this.tarif = tarif;
+        }
+
+        public String getInvoice() {
+            return invoice;
+        }
+
+        public void setInvoice(String invoice) {
+            this.invoice = invoice;
         }
     }
 }

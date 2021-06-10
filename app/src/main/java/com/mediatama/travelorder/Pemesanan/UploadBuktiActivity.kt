@@ -147,6 +147,10 @@ class UploadBuktiActivity : AppCompatActivity() {
         val localeID = Locale("in", "ID")
         val formatRupiah: NumberFormat = NumberFormat.getCurrencyInstance(localeID)
 
+        val tgl : String = intent.getStringExtra("from")!!.substring(8,10)
+        val bln : String = intent.getStringExtra("from")!!.substring(5,7)
+        val thn : String = intent.getStringExtra("from")!!.substring(1,4)
+
         Glide.with(context)
             .load(ApiClient.MOBIL_IMG_URL + intent.getStringExtra("foto"))
             .fitCenter()
@@ -156,8 +160,8 @@ class UploadBuktiActivity : AppCompatActivity() {
         binding.mobilUpload.text = intent.getStringExtra("mobil")
         binding.pesananUpload.text = intent.getStringExtra("pesan")+" kursi dipesan"
         binding.tarifUpload.text = formatRupiah.format(intent.getStringExtra("tarif")!!.toDouble())
-        binding.tglFromUpload.text = intent.getStringExtra("from")
-//        binding.tglToUpload.text = intent.getStringExtra("to")
+        binding.tglFromUpload.text = "$tgl-$bln-$thn"
+
     }
 
     private fun uploadImage() {
@@ -262,7 +266,7 @@ class UploadBuktiActivity : AppCompatActivity() {
         if (requestCode == REQUEST_GALLERY_PICTURE_CODE && resultCode == RESULT_OK){
             uriGallery = data!!.data!!
 
-            Toast.makeText(context, getRealPathFromUri(uriGallery), Toast.LENGTH_SHORT).show()
+//            Toast.makeText(context, getRealPathFromUri(uriGallery), Toast.LENGTH_SHORT).show()
 
             listImageUploaded!!.add(uriGallery.toString())
             adapterPhoto = PhotoAdapter(context, listImageUploaded!!)
@@ -277,7 +281,7 @@ class UploadBuktiActivity : AppCompatActivity() {
             imageSelected?.add(getRealPathFromUri(uriGallery).toString())
 
         }else if (requestCode == REQUEST_TAKE_PICTURE_CODE && resultCode == RESULT_OK){
-            Toast.makeText(context, pathTakePhoto, Toast.LENGTH_LONG).show()
+//            Toast.makeText(context, pathTakePhoto, Toast.LENGTH_LONG).show()
 
             listImageUploaded?.add(Uri.fromFile(File(pathTakePhoto)).toString())
             adapterPhoto = PhotoAdapter(context, listImageUploaded!!)

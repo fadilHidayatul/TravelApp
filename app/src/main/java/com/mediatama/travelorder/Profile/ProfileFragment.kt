@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment
 import androidx.loader.content.CursorLoader
 import com.bumptech.glide.Glide
 import com.crowdfire.cfalertdialog.CFAlertDialog
+import com.google.android.material.snackbar.Snackbar
 import com.mediatama.travelorder.LoginRegister.LoginActivity
 import com.mediatama.travelorder.R
 import com.mediatama.travelorder.SharedPreferences.PrefManager
@@ -47,7 +48,6 @@ import java.util.*
 class ProfileFragment : Fragment() {
     private lateinit var binding : FragmentProfileBinding
     private lateinit var manager : PrefManager
-    private lateinit var alertDialog : CFAlertDialog
     private lateinit var builder : CFAlertDialog.Builder
 
     private var CAMERA_CODE : Int = 100
@@ -57,6 +57,7 @@ class ProfileFragment : Fragment() {
     private lateinit var uriGalery : Uri
 
     private lateinit var imageChosen : String
+    private lateinit var urlGambar : String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -133,7 +134,7 @@ class ProfileFragment : Fragment() {
                     val jsonO = JSONObject(response.body()!!.string())
                     if (jsonO.getString("status") == "200"){
                         val data = jsonO.getJSONObject("data")
-                        val urlGambar = data.getString("foto_profil")
+                        urlGambar = data.getString("foto_profil")
 
                         Glide.with(requireContext())
                             .load(ApiClient.PROFIL_URL+urlGambar)
@@ -224,7 +225,7 @@ class ProfileFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == GALLERY_CODE && resultCode == AppCompatActivity.RESULT_OK){
             uriGalery = data!!.data!!
-            Toast.makeText(requireContext(),getRealPathFromUri(uriGalery),Toast.LENGTH_SHORT).show()
+//            Toast.makeText(requireContext(),getRealPathFromUri(uriGalery),Toast.LENGTH_SHORT).show()
 
             val uriImage = Uri.parse(uriGalery.toString())
             binding.imgProfil.setImageURI(uriImage)
@@ -232,13 +233,14 @@ class ProfileFragment : Fragment() {
             imageChosen = getRealPathFromUri(uriGalery)
             sendChangeProfilPicToDatabase()
         }else if (requestCode == TAKE_PICTURE_CODE && resultCode == AppCompatActivity.RESULT_OK){
-            Toast.makeText(requireContext(),pathTakePhoto,Toast.LENGTH_SHORT).show()
+//            Toast.makeText(requireContext(),pathTakePhoto,Toast.LENGTH_SHORT).show()
 
             val uriImage = Uri.fromFile(File(pathTakePhoto))
             binding.imgProfil.setImageURI(uriImage)
             binding.imgProfil.rotation = 90F
 
             imageChosen = pathTakePhoto
+            sendChangeProfilPicToDatabase()
         }
     }
 
@@ -259,9 +261,10 @@ class ProfileFragment : Fragment() {
                     if (jsonO.getString("status") == "200"){
                         Toast.makeText(requireContext(),jsonO.getString("message"), Toast.LENGTH_SHORT).show()
                     }else{
-                        Toast.makeText(requireContext(),jsonO.getString("message"), Toast.LENGTH_SHORT).show()
+                        Snackbar.make(view!!,jsonO.getString("message"),Snackbar.LENGTH_LONG).show()
+
                         Glide.with(requireContext())
-                            .load(R.color.black70)
+                            .load(ApiClient.PROFIL_URL+urlGambar)
                             .placeholder(R.color.black70)
                             .into(binding.imgProfil)
 
@@ -281,6 +284,7 @@ class ProfileFragment : Fragment() {
 
 
     private fun initialDialog(){
+
         builder = CFAlertDialog.Builder(requireContext())
             .setDialogStyle(CFAlertDialog.CFAlertStyle.BOTTOM_SHEET)
             .setTitle("LOGOUT")
@@ -293,6 +297,7 @@ class ProfileFragment : Fragment() {
                 CFAlertDialog.CFAlertActionAlignment.JUSTIFIED,
                 object : DialogInterface.OnClickListener {
                     override fun onClick(p0: DialogInterface?, p1: Int) {
+                        p0!!.dismiss()
                         manager.removeSession()
                         manager.removeRuteBoolean()
                         manager.removeMobilBoolean()
@@ -322,22 +327,11 @@ class ProfileFragment : Fragment() {
         binding.logout.setOnClickListener(object : View.OnClickListener {
             @SuppressLint("ResourceAsColor")
             override fun onClick(v: View?) {
-                alertDialog = builder.show()
+                builder.show()
             }
 
         })
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        alertDialog.dismiss()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        alertDialog.dismiss()
-    }
-
 
 
 }

@@ -84,6 +84,11 @@ interface ApiInterface {
         @Field("id_user") iduser : String
     ) : Call<ResponseBody>
 
+    @FormUrlEncoded
+    @POST("pemesanan/delete_pesanan.php")
+    fun deletePesanan(
+        @Field("idpesan") idPesan : String
+    ) : Call<ResponseBody>
 
 
 

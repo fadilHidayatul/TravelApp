@@ -28,7 +28,7 @@ class KendaraanAdapter(context: Context?, dataBean: ArrayList<Kendaraan.DATABean
 
         holder.binding.namaKendaraan.text = data.nama_kendaraan
         Glide.with(mContext)
-            .load(ApiClient.MOBIL_IMG_URL+data.thumbnail)
+            .load(ApiClient.THUMBMOBIL_IMG_URL+data.thumbnail)
             .fitCenter()
             .into(holder.binding.fotoKendaraan)
 

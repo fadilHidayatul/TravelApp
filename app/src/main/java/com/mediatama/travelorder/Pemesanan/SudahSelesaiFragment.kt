@@ -74,7 +74,6 @@ class SudahSelesaiFragment : Fragment() {
 
                     }else{
                         noData()
-                        Toast.makeText(context, jsonO.getString("message"), Toast.LENGTH_LONG).show()
                     }
                 }
             }

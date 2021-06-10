@@ -59,6 +59,7 @@
             android:background="@drawable/ic_input"
             android:fontFamily="@font/dmsans_regular"
             android:hint="no hp"
+            android:inputType="number"
             android:paddingStart="18dp"
             android:paddingEnd="12dp"
             android:singleLine="true"

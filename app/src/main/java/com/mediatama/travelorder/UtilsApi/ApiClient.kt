@@ -7,13 +7,16 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiClient {
-    var BASE_URL : String = "http://192.168.100.35/travelapp/"      //localhost
-    var MOBIL_IMG_URL : String = "http://192.168.100.35/travelapp/img/mobil/"
-    var PDF_URL : String = "http://192.168.100.35/travelapp/pdf/"
-    var PROFIL_URL : String = "http://192.168.100.35/travelapp/img/profil/"
+//    var BASE_URL : String = "http://192.168.100.35/travelapp/"      //localhost
+//    var MOBIL_IMG_URL : String = "http://192.168.100.35/travelapp/img/mobil/"
+//    var PDF_URL : String = "http://192.168.100.35/travelapp/pdf/"
+//    var PROFIL_URL : String = "http://192.168.100.35/travelapp/img/profil/"
 
-//    var BASE_URL : String = "http://192.168.100.70/travelapp/"      //Takana
-//    var MOBIL_IMG_URL : String = "http://192.168.100.70/travelapp/img/mobil/"
+    var BASE_URL : String = "http://travel.growupumkm.com/apitravel/"
+    var THUMBMOBIL_IMG_URL : String = "http://travel.growupumkm.com/assets/kendaraan/thumbnail/"
+    var MOBIL_IMG_URL : String = "http://travel.growupumkm.com/assets/kendaraan/foto/"
+    var PDF_URL : String = "http://travel.growupumkm.com/module/faktur/invoice.php?id="
+    var PROFIL_URL : String = "http://travel.growupumkm.com/apitravel/img/profil/"
 
     val getClient : ApiInterface
         get() {

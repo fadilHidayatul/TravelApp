@@ -90,9 +90,11 @@ class RegisterActivity : AppCompatActivity() {
                         val intent = Intent(context, SuccessRegisterActivity::class.java)
                         startActivity(intent)
                         finish()
-                        Toast.makeText(context,jsonO.getString("message"),Toast.LENGTH_SHORT).show()
+
                     }else{
-                        Toast.makeText(context,jsonO.getString("message"),Toast.LENGTH_SHORT).show()
+                        Alerter.create(this@RegisterActivity)
+                            .setText(jsonO.getString("message"))
+                            .setIcon(R.drawable.ic_warning).setBackgroundColorRes(R.color.black).show()
                     }
                 }
             }
