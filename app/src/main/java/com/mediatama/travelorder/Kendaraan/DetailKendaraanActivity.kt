@@ -3,6 +3,7 @@ package com.mediatama.travelorder.Kendaraan
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.Html
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.mediatama.travelorder.R
@@ -39,7 +40,8 @@ class DetailKendaraanActivity : AppCompatActivity() {
         binding.tahunDetail.text = "Tahun "+intent.getStringExtra("tahun")
         binding.platDetail.text = intent.getStringExtra("plat")
         binding.detailNamaMobil.text = intent.getStringExtra("nama")
-        binding.detailDeskripsiMobil.text = intent.getStringExtra("desc")
+        binding.detailDeskripsiMobil.text = Html.fromHtml(intent.getStringExtra("desc")).toString().replace("\n", "").trim()
+
     }
 
 }
